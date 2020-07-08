@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
-import {TouchableWithoutFeedback, Keyboard, Image, StatusBar} from 'react-native';
+import {TouchableWithoutFeedback, Keyboard, Image, StatusBar, Alert} from 'react-native';
 import logo from '../../assets/logo-cor.png';
 import iphoneIcon from '../../assets/iphone.svg';
 import loadingGIF from '../../assets/loading.gif';
 import Background from '../../components/Background';
 import {Container, Form, FormInput, SubmitButton, Img} from './styles';
 import {signInRequest} from '../../store/modules/auth/actions';
+import { color } from 'react-native-reanimated';
+import styled from 'styled-components';
 
 
 export default function SignIn() {
@@ -19,6 +21,11 @@ export default function SignIn() {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [codMobile, setCodMobile] = useState('');
+  const [isFocused,setIsFocused] = useState(false);
+
+  const handleInputFocus = useCallback(()=> {
+    setIsFocused(true);
+  },[])
 
   function handleSubmit() {
     dispatch(signInRequest(codMobile, user, password));
